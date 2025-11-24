@@ -1,11 +1,16 @@
 *{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     box-sizing: border-box;
+}
+:root{
+    --cor-primaria:rgb(241, 241, 241);
+    --cor-secundaria: rgb(209, 209, 209);
 }
 body{
     padding: 0%;
     margin: 0%;
     text-align: center;
-    background-color: rgb(241, 241, 241);
+    background-color: var(--cor-primaria);
 }
 a{
     text-decoration: none;
@@ -73,7 +78,7 @@ div#listaVendas{
     text-align: center;
     position: fixed;
     left: 0%;
-    background-color: green;
+    background-color: var(--cor-primaria);
     width: 40%;
     height: 100%;
     padding: 100px 20px;
@@ -85,7 +90,7 @@ div#listaVendas input{
 div#impressao{
     position: fixed;
     right: 0%;
-    background-color: rgb(34, 0, 128);
+    background-color: var(--cor-secundaria);
     width: 60%;
     height: 100%;
 }
@@ -94,7 +99,7 @@ div#finalizar{
     bottom: 2%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgb(241, 241, 241) ;
+    background-color: var(--cor-primaria) ;
     padding: 10px 20px;
     border-radius: 15px;
 }
