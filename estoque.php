@@ -29,9 +29,9 @@
     </form>
     <p>
         Ordernar por:
-    <a class="nav" href="#"> Nome  |</a>
-    <a class="nav" href="#"> Maior Valor  |</a>
-    <a class="nav" href="#"> Menor Valor  |</a>
+    <a class="nav" href="estoque.php?cod=nome"> Nome  |</a>
+    <a class="nav" href="estoque.php?cod=maiorValor"> Maior Valor  |</a>
+    <a class="nav" href="estoque.php?cod=menorValor"> Menor Valor  |</a>
     <a class="nav" href="#"> Categoria  |</a>
     </p>
 
@@ -39,8 +39,8 @@
     <div id="estoque">
         <div class="modal">
            <div id="modall">
-                <a href="#" class="sair" onclick="modalExit()">X</a>
-                <form action="" autocomplete="off">
+                <a href="#" class="sair" onclick="modalExit()">X</a><!--modalExit função JS para abrir tela flutuante-->
+                <form action="include/functions.php?cod=incluirProduto" autocomplete="off" method="post">
                     <fieldset>
                         <legend>DADOS PRINCIPAIS</legend>
                             <label for="nome">Nome: </label>
@@ -50,21 +50,13 @@
                             <br>
 
                             <label for="valorVenda">Valor de Venda R$: </label>
-                            <input type="number" name="valorVenda" id="valorVenda" required placeholder="1.99">
+                            <input type="step" name="valorV" id="valorVenda" required placeholder="1.99" min="0" max="199999">
                             <br>
                             <label for="categoria">Categoria: </label>
-                            <input type="text" name="categoria" id="categoria" list="listCategoria" required>
-                            <datalist id="listCategoria">
-                                <option value="Salgados"></option>
-                                <option value="Doces"></option>
-                                <option value="Bebidas"></option>
-                            </datalist>
+                            <input type="text" name="categoria" id="categoria" >
                             <label for="fabricante">Fabricante: </label>
-                            <input type="text" name="fabricante" id="fabricante" list="listFabricante">
-                            <datalist id="listFabricante" required>
-                                <option value="Sadia"></option>
-                                <option value="Estabelecimento"></option>
-                                <option value="Elma chips"></option>
+                            <input type="text" name="fabricante" id="fabricante">
+                            
                             <br>
                     </fieldset>
                     <fieldset>
@@ -75,7 +67,7 @@
                             <input type="number" name="cest" id="cest">
                             <br>
                             <label for="situacaoTributaria">Situação Tributária: </label>
-                            <input type="text" name="situacaoTributaria" id="situacaoTributaria" list="list-situacaoTributaria" required>
+                            <input type="text" name="situacaoTributaria" id="situacaoTributaria" list="list-situacaoTributaria" >
                             <datalist id="list-situacaoTributaria">
                                 <option value="Tributado"></option>
                                 <option value="Isento"></option>
@@ -88,7 +80,42 @@
                 </form>
            </div>
         </div>
-        
+        <div class="produtosResultado">
+            <table class="produtosResultado">
+                <tr>
+                    <th>Nome</th>
+                    <th>Código de barras</th>
+                    <th>valor de venda</th>
+                </tr>
+            <?php
+            $cod = $_GET['cod']?? '';
+            $sql= "SELECT * FROM produtos";
+
+            switch($cod){
+                case "maiorValor":
+                    $sql .= " ORDER BY valorVenda DESC"; 
+                    break;
+                case "menorValor":
+                    $sql .= " ORDER BY valorVenda"; 
+                    break;
+                case "nome":
+                    $sql .= " ORDER BY nome"; 
+                    break;
+            }
+            
+
+                $busca = $banco->query($sql);
+                while($resultado= $busca->fetch_object()){
+                    $valorV = number_format($resultado->valorVenda, 2, ',', '.');
+                    echo "<tr>
+                            <td>$resultado->nome</td>
+                            <td>$resultado->codBarras</td>
+                            <td>R$: $valorV</td>
+                        </tr>";
+                }
+            ?>
+            </table>
+        </div>
     </div>
     <footer>
     <p>&copy;Islan Maximo</p>

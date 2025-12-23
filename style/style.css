@@ -73,9 +73,11 @@ img.icon:hover{
     transition: 0.5s;
 }
 /*--------------------------------Estoque------------------------*/
-table{
+table.produtosResultado{
     margin: auto;
     border-collapse: collapse;
+    width: 900px;
+    max-width: 98%;
 }
 table td{
     border: 1px solid black;
